@@ -1,0 +1,27 @@
+FROM alpine:3.18.3
+
+LABEL maintainer="Maina, Stephen <m41na@yahoo.com>"
+
+WORKDIR /opt/vlang
+
+ENV VVV  /opt/vlang
+ENV PATH /opt/vlang:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+RUN apk update && \
+    # Default base dependencies
+    apk add --no-cache openssl-dev sqlite-dev \
+    # Git support
+    git openssh-client \
+    # js back-end
+    nodejs npm  \
+    # V-development dependencies
+    make musl-dev valgrind clang gcc \
+    # V-UI dependencies
+    libx11-dev glfw-dev freetype-dev
+
+RUN git clone https://github.com/vlang/v /opt/vlang
+RUN make VFLAGS='-cc gcc'
+RUN ./v symlink
+CMD ["echo", "v", "-version"]
+
+# check out: https://github.com/vlang/docker/blob/master/docker/vlang/Dockerfile.alpine.dev-full

@@ -1,0 +1,44 @@
+FROM ubuntu:20.04
+
+LABEL maintainer="Maina, Stephen <m41na@yahoo.com>"
+
+WORKDIR /opt/vlang
+
+ENV VVV  /opt/vlang
+ENV PATH /opt/vlang:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+RUN mkdir -p /opt/vlang && ln -s /opt/vlang/v /usr/bin/v
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive && \
+    # Default base dependencies
+    apt-get install -y --no-install-recommends libssl-dev libsqlite3-dev \
+    # Git support
+    git openssh-client \
+    # V-development dependencies
+    clang llvm-dev valgrind tcc make \
+    # V-UI dependencies
+    libx11-dev libglfw3-dev libfreetype6-dev \
+    # wget
+    wget \
+    # Certs
+    ca-certificates && \
+    # Get NodeJS setup script
+    wget -qO- "http://deb.nodesource.com/setup_14.x" | sh - && \
+    # Install NodeJS and clean up
+    apt-get update && \
+    apt-get install --no-install-recommends -y \
+    nodejs && \
+    # Clean
+    apt-get clean && rm -rf /var/cache/apt/archives/* && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/vlang
+RUN git clone https://github.com/vlang/v /opt/vlang
+RUN make CC=clang
+RUN ./v symlink
+
+USER 1000
+CMD ["echo", "v", "--version"]
+
+# check out: https://github.com/vlang/docker/blob/master/docker/vlang/Dockerfile.ubuntu.dev-full
