@@ -7,8 +7,6 @@ WORKDIR /opt/vlang
 ENV VVV  /opt/vlang
 ENV PATH /opt/vlang:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN mkdir -p /opt/vlang && ln -s /opt/vlang/v /usr/bin/v
-
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive && \
     # Default base dependencies
@@ -33,12 +31,10 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/cache/apt/archives/* && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /opt/vlang
 RUN git clone https://github.com/vlang/v /opt/vlang
 RUN make CC=clang
 RUN ./v symlink
 
-USER 1000
-CMD ["echo", "v", "--version"]
+CMD ["v", "-version"]
 
 # check out: https://github.com/vlang/docker/blob/master/docker/vlang/Dockerfile.ubuntu.dev-full
