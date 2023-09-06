@@ -40,4 +40,8 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'com.lesfurets:jenkins-pipeline-unit:1.17'
+
+//    testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-4.0'
+//    testImplementation 'com.athaydes:spock-reports:2.5.1-groovy-4.0'
+//    testImplementation 'com.homeaway.devtools.jenkins:jenkins-spock:2.1.5'
 }
