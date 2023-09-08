@@ -22,6 +22,7 @@ RUN apk update && \
 RUN git clone https://github.com/vlang/v /opt/vlang
 RUN make VFLAGS='-cc gcc'
 RUN ./v symlink
-CMD ["echo", "v", "-version"]
+
+CMD ["v", "-version"]
 
 # check out: https://github.com/vlang/docker/blob/master/docker/vlang/Dockerfile.alpine.dev-full
