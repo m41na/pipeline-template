@@ -1,0 +1,35 @@
+@Library('pipeline-template@main') _
+
+pipeline {
+
+    docker {
+        image 'node:18.17.1-alpine3.18'
+        args '-p 3000:3000'
+    }
+
+    stages {
+        stage ('Cloning Project') {
+            steps {
+                sh "echo cloning project..."
+                git branch: 'sample', url: 'https://github.com/m41na/pipeline-projects.git'
+                sh "cd express-client"
+                sh "npm install"
+                sayHello("Node js project")
+            }
+        }
+
+        stage ('Building Project') {
+            steps {
+                sh "echo building project..."
+                sh "./npm build"
+            }
+        }
+
+        stage ('Testing Project') {
+            steps {
+                sh "echo testing project..."
+                sh "npm test
+            }
+        }
+    }
+}

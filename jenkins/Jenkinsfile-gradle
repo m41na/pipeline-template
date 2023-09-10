@@ -1,0 +1,31 @@
+@Library('pipeline-template@main') _
+
+pipeline {
+
+    agent any
+
+    stages {
+        stage ('Cloning Project') {
+            steps {
+                sh "echo cloning project..."
+                git branch: 'sample', url: 'https://github.com/m41na/pipeline-projects.git'
+                sh "cd spring-todo"
+                sayHello("Gradle project")
+            }
+        }
+
+        stage ('Building Project') {
+            steps {
+                sh "echo building project..."
+                sh "./gradlew build"
+            }
+        }
+
+        stage ('Testing Project') {
+            steps {
+                sh "echo testing project..."
+                sh "./gradlew test"
+            }
+        }
+    }
+}
