@@ -1,5 +1,3 @@
-@Library('shared-pipeline-template@main') _
-
 pipeline {
 
     agent { docker { image 'maven:3.9.4-eclipse-temurin-17-alpine' } }
@@ -8,30 +6,28 @@ pipeline {
         stage ('Cloning Project') {
             steps {
                 sh "echo cloning project..."
-                git branch: 'sample', url: 'https://github.com/m41na/pipeline-projects.git'
-                sh "cd spring-todo"
-                sayHello("cloning gradle project")
+                git branch: 'main', url: 'https://github.com/m41na/pipeline-projects.git'
             }
         }
 
         stage ('Building Project') {
             steps {
                 sh "echo building project..."
-                sh "./gradlew build"
+                sh "./gradlew :spring-todo:build"
             }
         }
 
         stage ('Testing Project') {
             steps {
                 sh "echo testing project..."
-                sh "./gradlew test"
+                sh "./gradlew :spring-todo:test"
             }
         }
 
         stage ('Bundling Project') {
             steps {
                 sh "echo bundling project..."
-                sh "./gradlew package"
+                sh "./gradlew :spring-todo:jar"
             }
         }
     }

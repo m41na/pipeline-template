@@ -1,30 +1,33 @@
-@Library('pipeline-template@main') _
-
 pipeline {
 
-    agent any
+    agent { docker { image 'maven:3.9.4-eclipse-temurin-17-alpine' } }
 
     stages {
         stage ('Cloning Project') {
             steps {
                 sh "echo cloning project..."
-                git branch: 'sample', url: 'https://github.com/m41na/pipeline-projects.git'
-                sh "cd spring-user"
-                sayHello("Maven project")
+                git branch: 'main', url: 'https://github.com/m41na/pipeline-projects.git'
             }
         }
 
         stage ('Building Project') {
             steps {
                 sh "echo building project..."
-                sh "./mvn compile"
+                sh "mvn -f spring-user/pom.xml compile"
             }
         }
 
         stage ('Testing Project') {
             steps {
                 sh "echo testing project..."
-                sh "./mvn test
+                sh "mvn -f spring-user/pom.xml test"
+            }
+        }
+
+        stage ('Bundling Project') {
+            steps {
+                sh "echo bundling project..."
+                sh "mvn -f spring-user/pom.xml package"
             }
         }
     }
