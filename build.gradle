@@ -29,19 +29,25 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.groovy:groovy-all:4.0.14'
     implementation 'org.apache.ivy:ivy:2.5.2'
+    implementation 'org.apache.groovy:groovy-all:4.0.14'
     implementation 'org.jenkins-ci.main:jenkins-core:2.415'
-    implementation 'com.google.guava:guava:32.1.1-jre'
-    implementation 'org.checkerframework:checker-qual:3.36.0'
-    implementation 'org.kohsuke.stapler:stapler:1.263'
     implementation 'org.jenkins-ci.plugins.workflow:workflow-step-api:2.24'
     implementation 'org.jenkins-ci.plugins:pipeline-utility-steps:2.16.0'
 
+    implementation 'com.google.guava:guava:32.1.1-jre'
+    implementation 'org.checkerframework:checker-qual:3.36.0'
+    implementation 'org.kohsuke.stapler:stapler:1.263'
+
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
+    implementation 'ch.qos.logback:logback-core:1.4.11'
+
     testImplementation 'junit:junit:4.13.1'
+    testImplementation 'org.slf4j:slf4j-api:2.0.7'
     testImplementation 'com.lesfurets:jenkins-pipeline-unit:1.17'
 
 //    testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-4.0'
 //    testImplementation 'com.athaydes:spock-reports:2.5.1-groovy-4.0'
 //    testImplementation 'com.homeaway.devtools.jenkins:jenkins-spock:2.1.5'
+//    testImplementation 'gradle.plugin.net.bytebuddy:byte-buddy-gradle-plugin:1.12.12'
 }
