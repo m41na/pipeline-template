@@ -5,6 +5,15 @@ pipeline {
     agent { docker { image 'maven:3.9.4-eclipse-temurin-17-alpine' } }
 
     stages {
+        stage ('Cloning Project') {
+            steps {
+                sh "echo cloning project..."
+                git branch: 'sample', url: 'https://github.com/m41na/pipeline-projects.git'
+                sh "cd spring-todo"
+                sayHello("cloning gradle project")
+            }
+        }
+
         stage ('Building Project') {
             steps {
                 sh "echo building project..."

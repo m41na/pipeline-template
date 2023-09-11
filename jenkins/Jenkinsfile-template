@@ -1,0 +1,11 @@
+@Library('shared-pipeline-template@main') _
+
+sharedPipeline {
+    branch = 'main'
+    scmUrl = 'git@github.com:m41na/pipeline-projects.git'
+    email = 'm41na@yahoo.com'
+    serverPort = '8080'
+    developmentServer = 'dev-myproject.mycompany.com'
+    stagingServer = 'staging-myproject.mycompany.com'
+    productionServer = 'production-myproject.mycompany.com'
+}
