@@ -1,5 +1,3 @@
-@Library('pipeline-template@main') _
-
 pipeline {
 
     docker {
@@ -11,24 +9,14 @@ pipeline {
         stage ('Cloning Project') {
             steps {
                 sh "echo cloning project..."
-                git branch: 'sample', url: 'https://github.com/m41na/pipeline-projects.git'
-                sh "cd express-client"
-                sh "npm install"
-                sayHello("Node js project")
+                git branch: 'main', url: 'https://github.com/m41na/pipeline-projects.git'
             }
         }
 
         stage ('Building Project') {
             steps {
                 sh "echo building project..."
-                sh "./npm build"
-            }
-        }
-
-        stage ('Testing Project') {
-            steps {
-                sh "echo testing project..."
-                sh "npm test
+                sh "npm --prefix react-ui run build"
             }
         }
     }
